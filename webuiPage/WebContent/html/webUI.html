@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="..\js\jquery-3.4.1.js"></script>
+	<script type="text/javascript" src="..\js\webui.js"></script>
+	<link rel="stylesheet" type="text/css" href="..\css\webui.css">
+	<link rel="stylesheet" type="text/css" href="..\css\commonCSS.css">
+	<style>
+		.hid{
+		display:none;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<label>按钮组件28px</label><br>
+		<a href="#nogo" class="webui-linkbutton btn-blue " onClick='tabs(this)'>查询</a>
+		<a href="#nogo" class="webui-linkbutton btn-blue" onClick='tabs(this)'>重置</a>
+		<a href="#nogo" class="webui-linkbutton btn-blue" onClick='tabs(this)'>导出</a><br>
+	<label>功能按钮</label><br>
+    <a href="#nogo" class="webui-linkbutton btn-white btn-small" data-options="iconCls:'icon-add'" onclick="tabs(this)">增加</a>
+    <a href="#nogo" class="webui-linkbutton btn-white btn-small" data-options="iconCls:'icon-remove'" onclick="tabs(this)">删除</a>
+    </div>
+    <script type="text/javascript">
+		function tabs(obj) {
+        var text = $(obj).text();
+        alert(text);
+    } 
+	</script>	
+
+	
+	<br>
+	<div>
+	<label>日期组件</label><br>
+	<input id="dd" type="text"></input>
+	<a href="#nogo" class="webui-linkbutton btn-blue" onClick='days()'>获取日期</a>
+	<a href="#nogo" class="webui-linkbutton btn-blue" onClick='recover()'>重置</a>
+	</div>
+		<script type="text/javascript">
+			 $('#dd').datebox({
+	         required:true
+	         });
+	         $('#dd').datebox('setValue', '2019-11-11');/*设置指定日期*/
+	         function days(){
+	         	var v = $('#dd').datebox('getValue');/*获取日期*/
+	         	alert(v);
+	         }
+	         function recover(){
+	         	$('#dd').datebox('setValue', '2019-11-11');/*重置*/
+	         }
+        </script>
+        <br>
+    <div>
+    	<label class="label">开始：</label>
+            <input id="start" class="webui-datebox">
+                <label class="label">结束：</label>
+                	<input id="end" class="webui-datebox">
+                	<script>
+                    $(function () {
+                        $('#start').datebox().datebox('calendar').calendar();/*calendar获取日历对象*/
+                        $('#end').datebox().datebox('calendar').calendar({
+                            validator: function (date) {
+                                var _start = $('#start').datebox("getValue");/*得到第一个输入框的日期*/
+                                var _s = new Date(_start);
+                                var _outStart = new Date(_s.getFullYear(), _s.getMonth(), _s.getDate());
+                                return _outStart <= date;
+                            }
+                        });
+                    });
+                </script>
+    </div>
+
+    <br>
+    <div>
+    	<table id="dg" class="webui-datagrid" style="width:600px;height:250px"
+    data-options="fitColumns:true,singleSelect:true,pagination: true,rownumbers: true,pageSize: 10,pageList:[10,20,30]">
+    <thead>
+		<tr>
+			<th data-options="field:'name',width:100">姓名</th>
+			<th data-options="field:'mobile',width:100">手机号</th>
+			<th data-options="field:'shortNum',width:100">短号</th>
+			<th data-options="field:'region',width:100">地区</th>
+			<th data-options="field:'plan',width:100">套餐</th>
+			<th data-options="field:'balance',width:100">余额</th>
+			<th data-options="field:'status',width:100">状态</th>
+		</tr>
+    </thead>
+</table>
+<a href="#nogo" class="webui-linkbutton btn-blue" onClick='show()'>查询</a>
+            <script>
+           
+            function show(){
+            	$.ajax({
+            		url:'../data/datagrid_data1.json',
+            		type:'get',
+            		dataType:'json',
+            		success:function(data){
+            			$("#dg").datagrid('loadData',data);
+            			 $("#dg").datagrid("loadData", data.slice(0, 10));
+            			var pager = $("#dg").datagrid("getPager");
+                        pager.pagination({
+                            total: data.length,                        
+                            onSelectPage: function (pageNo, pageSize) {
+                                var start = (pageNo - 1) * pageSize;
+                                var end = start + pageSize;
+                                $("#dg").datagrid("loadData", data.slice(start, end));
+                                pager.pagination('refresh', {
+                                    total: data.length,
+                                    pageNumber: pageNo
+                                });
+                            }
+                        });
+            		},
+            		err:function(xhr){
+            			alert(xhr.status);
+            		}
+            	});
+            }   
+            
+            
+            
+            /* $(function () {
+                    $('#dg').datagrid({
+                            width: 700,
+                            height: 300,
+                            pageSize:10,
+                            pageList:[10,20,30],
+                            url: '../data/datagrid_data1.json',
+                            method: 'post',
+                            rownumbers: true, //显示行号列
+                            pagination: true, //显示分页工具栏
+                            singleSelect: true,//只能单选行
+                            loadMsg: '请稍候，数据加载中...',//自定义等待消息
+                            columns: [[
+                                {field: 'name', title: '姓名', width: 80},
+                                {field: 'mobile', title: '手机号', width: 100, sortable: true},
+                                {field: 'shortNum', title: '短号', width: 80},
+                                {field: 'region', title: '地区', width: 80},
+                                {field: 'plan', title: '套餐', width: 150},
+                                {field: 'balance', title: '余额', width: 50},
+                                {field: 'status', title: '状态', align: 'right'}
+                            ]]
+                    });
+                   
+                }) */
+            </script>
+    </div>
+    <br>
+     <div>
+    	<input id="cc" name="dept" value="aa">
+           <script>
+	            $('#cc').combobox({
+	            url:'../data/combobox_data.json',
+	            valueField:'id',
+	            textField:'text',
+	            editable:false
+	            });
+	            $('#cc').combobox({
+	            	onSelect:function(obj){    /* onSelect方法当用户选择一个列表项时触发 */
+	            		alert(obj.id);
+	            	}
+	            })
+            </script>
+    </div>
+    
+    <div>
+    	<input id="cc1" class="easyui-combobox" data-options="
+	    valueField: 'id',
+	    textField: 'text',
+	    url: 'get_data1.php',
+	    onSelect: function(rec){
+	    var url = 'get_data2.php?id='+rec.id;
+	    $('#cc2').combobox('reload', url);
+	    }">
+	<input id="cc2" class="easyui-combobox" data-options="valueField:'id',textField:'text'">
+    </div>
+    <script>
+    $('#cc1').combobox({
+        url:'../data/combobox_data.json',
+        valueField:'id',
+        textField:'text'
+    });
+    $('#cc2').combobox({
+        url:'../data/combobox_data.json',
+        valueField:'id',
+        textField:'text'
+    });
+    </script>
+    
+    <br>
+    <div>
+    <span>自定义反馈</span>
+    <div id="radio-nomarl"> </div>
+    <span id="in">反馈模板:<input type="text" id="fk"></span>
+    </div>
+    <script>
+    	var radio_normal = $("#radio-nomarl").AISelect({
+	    type: 'radio',
+	    displayField: 'channelName',
+	    valueField: 'channelId',
+	    data: [{
+	    channelId: '1001',
+	    channelName: '是',
+	    }, {
+	    channelId: '1002',
+	    channelName: '否'
+	    }],
+	    onSelect: function(obj) {
+	    //alert(JSON.stringify(obj.getSelectedIndex()));
+		    if(obj.getSelectedIndex()==1){
+		    	$("#in").addClass("hid");
+		    }else{
+		    	$("#in").removeClass("hid");
+		    }
+	    },
+	    must: false
+	    });
+    	 $('#fk').validatebox({
+    	        required: true,  
+    	    });
+    </script>
+    
+    <div>
+	<div class="page-container"> <!-- 业务最外面一层-->
+  	<div class="grid"><!-- 业务第二层-->
+     <div class="ui-panel input-group" id="input_group">
+        <div>
+         <span class="title">查询条件</span>
+          <div class="input-group">
+            <label class="ui-label">查询方式:</label>
+            <input  class="ui-input" data-options="validType:'minLength[5]'"/>
+            <input  class="ui-input" data-options="validType:'minLength[5]'"/>
+            <a class=" btn-grey qry-btn" id="query_btn" onClick="ccc()">查询</a>
+            <a class=" btn-grey qry-btn btn-disabled" id="reset_btn">重置</a>
+          </div>
+        </div>
+      </div>
+   </div>
+</div>    
+    </div>
+    <script>
+    $('.ui-input').validatebox({
+        required: true,  
+    });
+    function ccc(){
+    	alert("failed");
+    }
+    </script>
+  			<hr>
+                <div id="accordion_demo" style="width:500px;height:auto;">
+                    <div title="推荐人">
+                        <div style="padding: 20px;">
+                            <p>推荐人内容</p>
+                        </div>
+                    </div>
+                    <div title="代办人">
+                        <div style="padding: 20px;">
+                            <p>代办人内容</p>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $(function () {
+                        $('#accordion_demo').accordion({'selected':false});
+                    })
+     </script>
+     <div class="aries_demo bs-example code">
+     <a onclick="shade.open();" class="webui-linkbutton btn-blue btn-bigger l-btn l-btn-small">打开遮罩</a>
+ 
+                
+                <script>
+                    var shade = $('.aries_demo').AIShade({
+                        content: "test"
+                    });
+                </script><div class="ui-shade-bg"><div class="content" id="test">
+                    这个是内容！
+                    <br>
+                    <a onclick="shade.close();" style="margin-top: 70px;" class="webui-linkbutton btn-blue btn-bigger">关闭遮罩</a>
+                </div></div></div>
+</body>
+</html>

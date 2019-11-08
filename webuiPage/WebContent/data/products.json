@@ -1,0 +1,17 @@
+[{
+    "productid":1,
+    "productname":"全球通"
+},{
+    "productid":2,
+    "productname":"4G飞享"
+},{
+    "productid":3,
+    "productname":"移动王卡",
+    "selected":true
+},{
+    "productid":4,
+    "productname":"流量王"
+},{
+    "productid":5,
+    "productname":"自由选"
+}]

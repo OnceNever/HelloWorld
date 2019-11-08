@@ -1,0 +1,17 @@
+[{
+    "custid":1,
+    "custname":"非会员",
+    "selected":true
+},{
+    "custid":2,
+    "custname":"普通会员"
+},{
+    "custid":3,
+    "custname":"白金会员"  
+},{
+    "custid":4,
+    "custname":"钻石会员"
+},{
+    "custid":5,
+    "custname":"超级会员"
+}]

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>信息管理页面</title>
+	<script type="text/javascript" src="..\js\jquery-3.4.1.js"></script>
+	<script type="text/javascript" src="..\js\webui.js"></script>
+	<link rel="stylesheet" type="text/css" href="..\css\webui.css">
+	<link rel="stylesheet" type="text/css" href="..\css\commonCSS.css">
+	<style type="text/css">
+		.dis{
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<table class="webui-datagrid" style="width:1111px;height:250px"
+    data-options="url:'datagrid_data.json',fitColumns:true,singleSelect:true, rownumbers: true,frozenColumns : [[{field : 'ck',checkbox : true}]],">
+    <thead>
+		<tr>
+			<th data-options="field:'phonenum',width:80">服务号码</th>
+			<th data-options="field:'custi',width:80">客户标识</th>
+			<th data-options="field:'custn',width:80">客户名称</th>
+			<th data-options="field:'area',width:80">查询区域</th>
+			<th data-options="field:'time1',width:100">操作起始时间</th>
+			<th data-options="field:'time2',width:100">操作截止时间</th>
+			<th data-options="field:'time3',width:100">错收开始时间</th>
+			<th data-options="field:'time4',width:100">错收截止时间</th>
+		</tr>
+    </thead>
+</table>
+<a href="#nogo" class="webui-linkbutton btn-blue" >查询</a>
+</body>
+</html>
